@@ -1,24 +1,23 @@
 function insertionSort(arr) {
     for (let i = 0; i < arr.length; i++) {
         let key = arr[i]
-        for (let j = 0; j <= i; j++) {
-            if (key <= arr[j]) {
-                let temp = arr[j]
-                arr[j] = arr[i]
-                arr[i] = temp
-            }
+        let j = i - 1;
+
+        while (j >= 0 && arr[j] > key) {
+            arr[j + 1] = arr[j]
+            j--
         }
-        console.log(arr)
+
+        arr[j + 1] = key
     }
     return arr
+
 }
 
+console.log(insertionSort([45, 78, 12, 10, 98, 65, 32, 45, 78, 12]))
+console.log(insertionSort([54, 26, 93, 17, 77, 31, 44, 55, 20]))
 
-// console.log(insertionSort([54, 26, 93, 17, 77, 31, 44, 55, 20]))
-
-
-
-// Failed attemt !!!
+// Failed attemt!
 
 
 // function insertionSort(arr) {
@@ -88,21 +87,20 @@ function insertionSort(arr) {
 // console.log(insertionSort([45, 78, 12, 45, 99, 6, 9, 5, 41, 21, 10]))
 
 
-function insertionSort(arr) {
-    for (let i = 1; i < arr.length; i++) {
-        let key = arr[i];
-        let j = i - 1;
+// function insertionSort(arr) {
+//     for (let i = 1; i < arr.length; i++) {
+//         let key = arr[i];
+//         let j = i - 1;
 
-        while (j >= 0 && arr[j] > key) {
-            arr[j + 1] = arr[j];
-            j = j - 1;
-        }
-        arr[j + 1] = key;
-        console.log(arr)
-    }
-    return arr
-}
-
+//         while (j >= 0 && arr[j] > key) {
+//             arr[j + 1] = arr[j];
+//         }
+//         arr[j + 1] = key;
+//         console.log(arr)
+//     }
+//     return arr
+// }
 
 
-console.log(insertionSort([23, 1, 10, 5, 2, 30]))
+
+// console.log(insertionSort([23, 1, 10, 5, 2, 30]))

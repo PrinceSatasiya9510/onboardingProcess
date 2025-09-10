@@ -13,10 +13,11 @@ function selectionSort(arr) {
                 arr[min] = temp
             }
         }
+        console.log(arr)
     }
     return arr
 }
 
 console.log(selectionSort([29, 72, 98, 13, 87, 66, 52, 51, 36]))
-console.log(selectionSort([1, -48, 39, 38, -35, 29, -25, 24, 18, 10, -5]))
-console.log(selectionSort([-10, -89, -5, -45, 5, -41, -66, -101]))
+// console.log(selectionSort([1, -48, 39, 38, -35, 29, -25, 24, 18, 10, -5]))
+// console.log(selectionSort([-10, -89, -5, -45, 5, -41, -66, -101]))

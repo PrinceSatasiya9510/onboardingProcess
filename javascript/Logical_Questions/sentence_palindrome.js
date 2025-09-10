@@ -5,10 +5,8 @@ function sentencePalindrome(sentence) {
     let validStr = true;
 
     for (let i = 0; i < string.length; i++) {
-
         if (string[i] == string[lastIndex - 1]) {
             lastIndex--
-            continue;
         } else {
             validStr = false;
             break;
