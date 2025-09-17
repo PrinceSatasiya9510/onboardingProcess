@@ -26,14 +26,13 @@ function stringAnagram(string1, string2) {
         }
     }
 
-    for (let i = 0; i < splitString1.length; i++) {
-        if (splitString1[i] != splitString2[i]) {
-            return false
-        }
+
+    if (splitString1.join("") != splitString2.join("")) {
+        return false
     }
     return true
 }
 
 console.log(stringAnagram("Listen", "Silent"));
 console.log(stringAnagram("Debit Card", "Bad Credit"));
-console.log(stringAnagram("Debit habit", "Bad habit")); 
+console.log(stringAnagram("Debit habit", "Bad habit"));
