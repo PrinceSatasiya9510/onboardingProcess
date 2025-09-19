@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="Folder" draggable="true" data-status="true" data-id="87851554145">
+            <div class="folderHeading">
+                <i class="ri-arrow-down-s-line down_arrow"></i>
+                <span class="folderName">Hierarchical Folder Structure</span>
+                <div class="actionIcons">
+                    <i class="ri-pencil-fill" onclick="editFolderName(this)"></i>
+                    <i class="ri-folder-add-fill" onclick="popup(87851554145)"></i>
+                    <i class="ri-delete-bin-6-fill" onclick="deleteFolder(this)"></i>
+                </div>
+            </div>
+            <div class="childContainer"></div>
+        </div>
+    </div>
+
+    <div class="popupContainer">
+        <div class="popup">
+            <label for="" id="popupLabel">Create New Folder</label>
+            <input type="text" class="folderNameInput" placeholder="Folder Name" />
+            <p class="folderNameError">Fill the blank!</p>
+            <button class="folderCreateButton">CREATE</button>
+            <button class="folderCancelButton" onclick="popupRemove()">CANCEL</button>
+        </div>
+
+        <div class="deleteContainer">
+            <h3 id="deleteContainertext">Are you sure?</h3>
+            <button id="deleteFolderButton">DELETE</button>
+            <button id="deleteFolderCancelButton" onclick="popupRemove()">CANCEL</button>
+            <center>
+                <button id="okButton" onclick="popupRemove()">Ok</button>
+            </center>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
