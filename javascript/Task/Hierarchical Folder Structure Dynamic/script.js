@@ -248,7 +248,6 @@ document.addEventListener("drop", function (e) {
   const movingId = Number(movingFolder.getAttribute("data-id"));
   const targetId = Number(currentFolder.getAttribute("data-id"));
 
-
   const movingObj = findByID(movingId, myFolderData);
   const targetObj = findByID(targetId, myFolderData);
 
