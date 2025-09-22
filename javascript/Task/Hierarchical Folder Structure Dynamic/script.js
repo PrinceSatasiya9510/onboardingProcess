@@ -244,16 +244,13 @@ document.addEventListener("dragover", function (e) {
 document.addEventListener("drop", function (e) {
   e.preventDefault();
   const currentFolder = e.target.closest(".Folder");
-  if (!movingFolder || !currentFolder || movingFolder === currentFolder) return;
 
   const movingId = Number(movingFolder.getAttribute("data-id"));
   const targetId = Number(currentFolder.getAttribute("data-id"));
 
-  if (movingId === targetId) return;
 
   const movingObj = findByID(movingId, myFolderData);
   const targetObj = findByID(targetId, myFolderData);
-  if (!movingObj || !targetObj) return;
 
   const oldParent = findByID(movingObj.parentId, myFolderData);
   if (oldParent) {
