@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.navContainer {
+    height: 60px;
+    width: 100%;
+    /* background-color: aqua; */
+    /* border: 1px solid #000; */
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 30px;
+}
+
+#addCompany {
+    height: 40px;
+    padding: 0px 20px;
+    width: fit-content;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#assigneCompanyToAdmin {
+    height: 40px;
+    width: fit-content;
+    padding: 0px 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#logout {
+    height: 40px;
+    padding: 0px 20px;
+    width: fit-content;
+    cursor: pointer;
+}
+
+.comapnyDataContainer {
+    height: 800px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comapnyDataContainer h3 {
+    color: gray;
+}
+
+.popupContainer {
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    background-color: rgba(128, 128, 128, 0.212);
+}
+
+.popup {
+    height: fit-content;
+    width: fit-content;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: white;
+}
+
+.popup label {
+    font-size: 14px;
+}
+
+.popup input {
+    height: 40px;
+    width: 250px;
+    margin-top: 5px;
+    padding-left: 10px;
+}
+
+#create_compan_submit_button {
+    height: 40px;
+    width: 100px;
+    margin-top: 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+#company_name_error {
+    font-size: 13px;
+    color: red;
+    display: none;
+}
+
+#cancel {
+    height: 40px;
+    width: 100px;
+    cursor: pointer;
+    display: inline-block;
+}

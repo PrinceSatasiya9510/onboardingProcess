@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Admin Page...</title>
+    <link rel="stylesheet" href="super.css">
+</head>
+
+<body>
+    <!-- <h1>super</h1> -->
+    <div class="navContainer">
+        <button id="addCompany" onclick="createCompanyPopup()">Register Company</button>
+        <button id="assigneCompanyToAdmin">Assigne Company</button>
+        <button id="logout">Logout</button>
+    </div>
+
+    <div class="popupContainer">
+        <div class="popup">
+            <label for="company_name">Company Name</label>
+            <input type="text" placeholder="Company Name" id="company_name">
+            <p id="company_name_error">Fill the Blank!</p>
+            <div class="action_button">
+                <button id="create_compan_submit_button" onclick="registerNewCompany()">Create</button>
+                <button id="cancel" onclick="removeCreateCompanyPopup()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="comapnyDataContainer">
+        <h3>You have no company data!</h3>
+    </div>
+    <script src="super.js"></script>
+</body>
+
+</html>
