@@ -2,17 +2,12 @@ var myFolderData;
 let movingFolder = null;
 let editIndex = null;
 
-function updateLocalStorage(data, callback) {
-  localStorage.setItem("folderData", JSON.stringify(data));
-  callback();
-}
-
 async function getFoldersDataFromLocalStorage() {
   let data = await JSON.parse(localStorage.getItem("folderData"));
   // console.log("🚀 ~ getFoldersDataFromLocalStorage ~ data:", data)
   if (!data) {
     myFolderData = {
-      id: 101,
+      id: 1,
       parentId: null,
       name: "Folder 1",
       childrens: [],
@@ -23,6 +18,11 @@ async function getFoldersDataFromLocalStorage() {
   genrateMainFolderContainer();
 }
 getFoldersDataFromLocalStorage();
+
+function updateLocalStorage(data, callback) {
+  localStorage.setItem("folderData", JSON.stringify(data));
+  callback();
+}
 
 function findByID(id, obj) {
   if (obj.id === id) {
@@ -230,7 +230,7 @@ document.addEventListener("dragstart", function (e) {
   }
 });
 
-document.addEventListener("dragend", function () {
+document.addEventListener("dragend", function (e) {
   if (movingFolder) {
     movingFolder = null;
   }
@@ -247,6 +247,10 @@ document.addEventListener("drop", function (e) {
 
   const movingId = Number(movingFolder.getAttribute("data-id"));
   const targetId = Number(currentFolder.getAttribute("data-id"));
+
+  if (movingId === targetId) {
+    return;
+  }
 
   const movingObj = findByID(movingId, myFolderData);
   const targetObj = findByID(targetId, myFolderData);
