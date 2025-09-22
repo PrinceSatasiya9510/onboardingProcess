@@ -2,12 +2,17 @@ var myFolderData;
 let movingFolder = null;
 let editIndex = null;
 
+function updateLocalStorage(data, callback) {
+  localStorage.setItem("folderData", JSON.stringify(data));
+  callback();
+}
+
 async function getFoldersDataFromLocalStorage() {
   let data = await JSON.parse(localStorage.getItem("folderData"));
   // console.log("🚀 ~ getFoldersDataFromLocalStorage ~ data:", data)
   if (!data) {
     myFolderData = {
-      id: 1,
+      id: 101,
       parentId: null,
       name: "Folder 1",
       childrens: [],
@@ -18,11 +23,6 @@ async function getFoldersDataFromLocalStorage() {
   genrateMainFolderContainer();
 }
 getFoldersDataFromLocalStorage();
-
-function updateLocalStorage(data, callback) {
-  localStorage.setItem("folderData", JSON.stringify(data));
-  callback();
-}
 
 function findByID(id, obj) {
   if (obj.id === id) {
@@ -230,7 +230,7 @@ document.addEventListener("dragstart", function (e) {
   }
 });
 
-document.addEventListener("dragend", function (e) {
+document.addEventListener("dragend", function () {
   if (movingFolder) {
     movingFolder = null;
   }
@@ -244,6 +244,11 @@ document.addEventListener("dragover", function (e) {
 document.addEventListener("drop", function (e) {
   e.preventDefault();
   const currentFolder = e.target.closest(".Folder");
+  console.log("🚀 ~ currentFolder:", currentFolder)
+  console.log("🚀 ~ movingFolder:", movingFolder)
+  if (!movingFolder || !currentFolder || movingFolder === currentFolder) {
+    return;
+  }
 
   const movingId = Number(movingFolder.getAttribute("data-id"));
   const targetId = Number(currentFolder.getAttribute("data-id"));
@@ -253,7 +258,23 @@ document.addEventListener("drop", function (e) {
   }
 
   const movingObj = findByID(movingId, myFolderData);
+  // console.log("🚀 ~ movingObj:", movingObj)
   const targetObj = findByID(targetId, myFolderData);
+  // console.log("🚀 ~ targetObj:", targetObj)
+  if (!movingObj || !targetObj) {
+    return;
+  }
+  if (!movingObj || !targetObj) {
+    return;
+  }
+
+  let movingObjectAreNotPutInChildObject = findByID(targetId, movingObj)
+
+  if (movingObjectAreNotPutInChildObject) {
+    return;
+  }
+
+  // console.log("🚀 ~ movingObjectAreNotPutInChildObject:", movingObjectAreNotPutInChildObject)
 
   const oldParent = findByID(movingObj.parentId, myFolderData);
   if (oldParent) {
@@ -261,6 +282,7 @@ document.addEventListener("drop", function (e) {
       (child) => child.id !== movingId
     );
   }
+
 
   movingObj.parentId = targetId;
   targetObj.childrens.push(movingObj);
