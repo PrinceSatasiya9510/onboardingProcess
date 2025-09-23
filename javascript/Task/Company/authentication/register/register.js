@@ -25,11 +25,11 @@ function stopLoader() {
 }
 
 function getUsers() {
-  return JSON.parse(localStorage.getItem("users")) || [];
+  return JSON.parse(localStorage.getItem("adminDetail")) || [];
 }
 
 function saveUsers(users) {
-  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("adminDetail", JSON.stringify(users));
 }
 
 
@@ -99,7 +99,8 @@ function register() {
     name: name.value,
     email: email.value,
     password: confirmPassword.value,
-    role: email.value === "satasiyaprince9510@gmail.com" ? "superAdmin" : "admin",
+    role: "admin",
+    status: false,
     companies_id: [],
     timestamp: Date.now().toString()
   };
@@ -110,11 +111,14 @@ function register() {
   localStorage.setItem("token", JSON.stringify({ previousUserID: newUser.id, timestamp: newUser.timestamp }));
 
   stopLoader();
-  window.location.href = "../dashboard/dashboard.html";
+  if (newUser.email === "satasiyaprince9510@gmail.com") {
+    window.location.href = "../../Dashboard/superAdmin/super.html";
+  } else {
+    window.location.href = "../../Dashboard/admin/admin.html";
+  }
 }
 
 function userLoginOrNot() {
-  showLoader();
   let token = JSON.parse(localStorage.getItem("token"));
   let users = getUsers();
 
@@ -123,11 +127,12 @@ function userLoginOrNot() {
     if (userObject) {
       let getTime = (Date.now() - userObject.timestamp) / 1000;
       if (getTime < 250) {
-        stopLoader();
-        window.location.href = "../dashboard/dashboard.html";
-        return;
+        if (userObject.email === "satasiyaprince9510@gmail.com") {
+          window.location.href = "../../Dashboard/superAdmin/super.html";
+        } else {
+          window.location.href = "../../Dashboard/admin/admin.html";
+        }
       }
     }
   }
-  stopLoader();
 }

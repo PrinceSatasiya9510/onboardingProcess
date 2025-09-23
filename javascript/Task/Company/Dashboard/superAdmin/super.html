@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Super Admin Page...</title>
     <link rel="stylesheet" href="super.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
 </head>
 
 <body>
     <!-- <h1>super</h1> -->
     <div class="navContainer">
         <button id="addCompany" onclick="createCompanyPopup()">Register Company</button>
-        <button id="assigneCompanyToAdmin">Assigne Company</button>
-        <button id="logout">Logout</button>
+        <button id="assigneCompanyToAdmin" onclick="renderAdminDetail()">All Admins</button>
+        <button id="logout" onclick="logout()">Logout</button>
     </div>
 
     <div class="popupContainer">
@@ -29,7 +30,65 @@
     </div>
 
     <div class="comapnyDataContainer">
-        <h3>You have no company data!</h3>
+        <!-- <h3>You have no company data!</h3> -->
+        <div class="companyDetail">
+            <span id="companyHeading">Comapny Detail</span>
+            <div class="companyContainer">
+                <!-- <div class="company">
+                    <div class="comapnyNameContainer">
+                        <span>new company</span>
+                    </div>
+                    <div class="comapnyActionButtonContainer">
+                        <div class="circle">
+                            <i class="ri-pencil-line" title="Edit Comapny Name"></i>
+                        </div>
+                        <div class="circle">
+                            <i class="ri-table-view" title="View Detail"></i>
+                        </div>
+                        <div class="circle">
+                            <i class="ri-user-add-line" title="Assgin Admin"></i>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="adminDetail">
+            <span id="adminHeading">Admin Detail</span>
+            <div class="adminContainer">
+                <!-- <div class="admin">
+                    <div class="adminNameContainer">
+                        <span>admin 2 </span>
+                    </div>
+                    <div class="adminActionButtonContainer">
+                        <div class="circle">
+                            <i class="ri-pencil-line" title="Edit Admin Name"></i>
+                        </div>
+                        <div class="circle">
+                            <i class="ri-table-view" title="View Detail"></i>
+                        </div>
+                        <div class="circle">
+                            <i class="ri-user-add-line" title="Assgin Admin"></i>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="assignCompanyContainer">
+        <div class="companyAssignContainer">
+            <h3 id="assignHeading"></h3>
+            <div class="parentContainerOfAdminNames">
+                <!-- <div class="adminsNames">
+                    <div class="selectCircle"><i class="ri-check-line"></i></div>
+                    <div class="adminName"><span>sdfgdg</span></div>
+                </div> -->
+            </div>
+            <div class="assignActionButton">
+                <button id="assignAdminsButton">Submit</button>
+                <button id="assignAdminsCancelButton" onclick="removeAssignPopup()">Cancel</button>
+            </div>
+        </div>
     </div>
     <script src="super.js"></script>
 </body>

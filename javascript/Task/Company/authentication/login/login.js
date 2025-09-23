@@ -19,7 +19,7 @@ function stopLoader() {
 }
 
 function getUsers() {
-  return JSON.parse(localStorage.getItem("users")) || [];
+  return JSON.parse(localStorage.getItem("adminDetail")) || [];
 }
 
 function handleError(err, type) {
@@ -49,12 +49,12 @@ async function login() {
   }
 
   userObject.timestamp = Date.now().toString();
-  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("adminDetail", JSON.stringify(users));
 
   localStorage.setItem("token", JSON.stringify({ previousUserID: userObject.id, timestamp: userObject.timestamp }));
 
   stopLoader();
-  if (userObject.role === "superAdmin") {
+  if (userObject.email === "satasiyaprince9510@gmail.com") {
     window.location.href = "../../Dashboard/superAdmin/super.html";
   } else {
     window.location.href = "../../Dashboard/admin/admin.html";
@@ -75,7 +75,7 @@ function userLoginOrNot() {
     if (userObject) {
       let getTime = (Date.now() - userObject.timestamp) / 1000;
       if (getTime < 250) {
-        if (userObject.role === "superAdmin") {
+        if (userObject.email === "satasiyaprince9510@gmail.com") {
           window.location.href = "../../Dashboard/superAdmin/super.html";
         } else {
           window.location.href = "../../Dashboard/admin/admin.html";
