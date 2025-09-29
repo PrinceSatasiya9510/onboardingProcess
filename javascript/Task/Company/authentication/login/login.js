@@ -57,7 +57,7 @@ async function login() {
   if (userObject.email === "satasiyaprince9510@gmail.com") {
     window.location.href = "../../Dashboard/superAdmin/super.html";
   } else {
-    window.location.href = "../../Dashboard/admin/admin.html";
+    window.location.href = "../../Dashboard/companyAndAdmin/companyLogin/companyLogin.html";
   }
 }
 
@@ -74,11 +74,11 @@ function userLoginOrNot() {
     let userObject = users.find((e) => e.id == token.previousUserID);
     if (userObject) {
       let getTime = (Date.now() - userObject.timestamp) / 1000;
-      if (getTime < 250) {
+      if (getTime < 3600) {
         if (userObject.email === "satasiyaprince9510@gmail.com") {
           window.location.href = "../../Dashboard/superAdmin/super.html";
         } else {
-          window.location.href = "../../Dashboard/admin/admin.html";
+          window.location.href = "../../Dashboard/companyAndAdmin/companyLogin/companyLogin.html";
         }
       }
     }

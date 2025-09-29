@@ -339,3 +339,7 @@ body {
 .adminsNames:hover {
     background-color: #e4e4e4;
 }
+
+#adminSelectError {
+    display: none;
+}

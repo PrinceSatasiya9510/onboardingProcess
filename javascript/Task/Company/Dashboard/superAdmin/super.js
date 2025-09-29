@@ -1,3 +1,8 @@
+document.addEventListener("DOMContentLoaded", (event) => {
+    userLoginOrNot()
+
+});
+
 let editIndex = null
 async function getCompanyDataFromLocalStorage(response) {
     let data;
@@ -116,9 +121,12 @@ async function renderAdminDetail(company_id) {
     const adminContainer = document.querySelector(".adminContainer")
     adminContainer.innerHTML = ""
     let admin_data = await getCompanyDataFromLocalStorage("adminDetail")
+    let withoutSuperAdmin = admin_data.filter(ele => ele.email !== "satasiyaprince9510@gmail.com")
+
+
 
     if (company_id) {
-        admin_data = admin_data.filter(ele => {
+        withoutSuperAdmin = withoutSuperAdmin.filter(ele => {
             let status = ele.companies_id.some(e => e == company_id)
             if (status) {
                 return ele
@@ -126,9 +134,9 @@ async function renderAdminDetail(company_id) {
         })
     }
 
-    console.log("🚀 ~ renderAdminDetail ~ admin_data:", admin_data)
+    console.log("🚀 ~ renderAdminDetail ~ admin_data:", withoutSuperAdmin)
     const adminHeading = document.querySelector("#adminHeading")
-    if (!admin_data || admin_data.length <= 0) {
+    if (!withoutSuperAdmin || withoutSuperAdmin.length <= 0) {
         adminHeading.innerText = "Company have no admins!"
         adminHeading.style.color = "gray"
         return
@@ -138,7 +146,7 @@ async function renderAdminDetail(company_id) {
     }
 
     let adminElement = ""
-    admin_data.forEach(element => {
+    withoutSuperAdmin.forEach(element => {
         adminElement += `
         <div class="admin" data-id="${element.id}">
             <div class="adminNameContainer">
@@ -171,6 +179,9 @@ function assignPopup() {
 }
 function removeAssignPopup() {
     const assignCompanyContainer = document.querySelector(".assignCompanyContainer")
+    const adminSelectError = document.getElementById("adminSelectError")
+
+    adminSelectError.style.display = "none"
     assignCompanyContainer.style.display = "none"
 }
 
@@ -178,12 +189,13 @@ function removeAssignPopup() {
 async function renderAdminDetailWhenAssign(company_id) {
     assignPopup()
     let adminData = await getCompanyDataFromLocalStorage("adminDetail")
+    let withoutSuperAdmin = adminData.filter(ele => ele.email !== "satasiyaprince9510@gmail.com")
     const parentContainerOfAdminNames = document.querySelector(".parentContainerOfAdminNames")
     const assignAdminsButton = document.getElementById("assignAdminsButton")
     const assignHeading = document.querySelector("#assignHeading")
     const getCompanyData = await getCompanyDataFromLocalStorage("companyDetail")
     const speceficCompanyData = getCompanyData.find(ele => ele.company_id === company_id)
-    const filterAdmin = await adminData.filter(ele => {
+    const filterAdmin = await withoutSuperAdmin.filter(ele => {
         let status = ele.companies_id.some(ele => ele == company_id)
         if (!status) {
             return ele
@@ -237,6 +249,21 @@ async function renderAdminDetailWhenAssign(company_id) {
         const adminDetails = document.querySelectorAll(".adminsNames")
         const findCompanyIndex = getCompanyData.findIndex(ele => ele.company_id === company_id)
 
+        const adminDetailsArray = [...adminDetails];
+        let validation = adminDetailsArray.every(ele => ele.getAttribute("data-selected") == "false");
+        console.log("🚀 ~ renderAdminDetailWhenAssign ~ validation:", validation)
+        const adminSelectError = document.getElementById("adminSelectError")
+
+
+        if (validation) {
+            adminSelectError.style.display = "block"
+            adminSelectError.style.color = "red"
+            return
+        } else {
+            adminSelectError.style.display = "none"
+        }
+
+
         adminDetails.forEach(ele => {
             if (ele.getAttribute("data-selected") === "true") {
                 let ID = Number(ele.getAttribute("data-id"))
@@ -248,11 +275,31 @@ async function renderAdminDetailWhenAssign(company_id) {
             }
         })
         console.log(getCompanyData)
-        console.log(adminData)
+        console.log(withoutSuperAdmin)
         updateCompanyData(getCompanyData, "companyDetail")
         updateCompanyData(adminData, "adminDetail")
         renderAdminDetail()
         removeAssignPopup()
+    }
+}
 
+function getUsers() {
+    return JSON.parse(localStorage.getItem("adminDetail")) || [];
+}
+
+function userLoginOrNot() {
+
+    let token = JSON.parse(localStorage.getItem("token"));
+    let users = getUsers();
+
+    if (token) {
+        let userObject = users.find((e) => e.id == token.previousUserID);
+        if (userObject) {
+            let getTime = (Date.now() - userObject.timestamp) / 1000;
+            console.log("🚀 ~ userLoginOrNot ~ getTime:", getTime)
+            if (getTime > 3600) {
+                window.location.href = "../../authentication/login/login.html";
+            }
+        }
     }
 }

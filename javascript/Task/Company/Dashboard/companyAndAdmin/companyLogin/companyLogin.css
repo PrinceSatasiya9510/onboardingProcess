@@ -1,0 +1,68 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #e4e4e4;
+    align-items: center;
+}
+
+.loginContainer {
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 400px;
+    padding: 10px 20px;
+}
+
+.companyNameContainer {
+    /* margin-top: 10px; */
+    height: fit-content;
+    /* border: 1px solid black; */
+    /* display: grid; */
+    gap: 10px;
+    overflow: scroll;
+    scrollbar-width: none;
+    overflow: scroll;
+}
+
+.companyName {
+    height: 70px;
+    border: 1px solid black;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    padding: 20px;
+    align-items: center;
+}
+
+.companyName button {
+    width: 80px;
+    cursor: pointer;
+    height: 40px;
+}
+
+.logoutContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logoutContainer i {
+    cursor: pointer;
+    font-size: 18px;
+}

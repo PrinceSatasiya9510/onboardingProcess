@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin page...</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div class="container"></div>
+
+    <div class="popupContainer">
+        <div class="popup">
+            <label for="" id="popupLabel">Create New Folder</label>
+            <input type="text" class="folderNameInput" placeholder="Folder Name" />
+            <p class="folderNameError">Fill the blank!</p>
+            <button class="folderCreateButton">CREATE</button>
+            <button class="folderCancelButton" onclick="popupRemove()">CANCEL</button>
+        </div>
+
+        <div class="deleteContainer">
+            <h3 id="deleteContainertext">Are you sure?</h3>
+            <button id="deleteFolderButton">DELETE</button>
+            <button id="deleteFolderCancelButton" onclick="popupRemove()">CANCEL</button>
+            <center>
+                <button id="okButton" onclick="popupRemove()">Ok</button>
+            </center>
+        </div>
+    </div>
+
+    <div class="sidebar">
+        <h2 id="companyNameTag"></h2>
+        <div class="circle"><i class="ri-logout-box-r-line" title="logout"></i></div>
+        <div class="logoutContainer">
+            <h5 id="logoutFromCompany" onclick="logoutFromCompany()">Logout From example</h5>
+            <h5 id="completeLogout" onclick="logout()">logout</h5>
+        </div>
+    </div>
+
+
+
+    <script src="admin.js"></script>
+</body>
+
+</html>
