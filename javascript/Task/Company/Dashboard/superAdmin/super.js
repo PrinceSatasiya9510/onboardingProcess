@@ -40,15 +40,7 @@ function removeCreateCompanyPopup() {
 
 
 function inputValidation(input) {
-    const profile_picture_Input = document.getElementById("profile_picture")
     const company_name_error = document.getElementById("company_name_error")
-    let files = profile_picture_Input.files[0]
-    if (editIndex) {
-        if (!files) {
-            company_name_error.style.display = "block"
-            return
-        }
-    }
     if (input.value.trim() == "") {
         company_name_error.style.display = "block"
         return

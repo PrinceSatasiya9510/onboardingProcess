@@ -346,3 +346,13 @@ body {
 #companyNameTagSpan {
     margin-left: 15px;
 }
+
+#profile_picture_lable {
+    padding-top: 10px;
+}
+
+#profile_picture {
+    height: fit-content;
+    padding: 15px 10px;
+    border: 1px solid #000;
+}
