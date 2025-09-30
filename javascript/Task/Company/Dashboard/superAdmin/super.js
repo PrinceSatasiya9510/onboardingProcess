@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
     userLoginOrNot()
     renderComapnyDetail()
     renderAdminDetail()
-
-
 });
 let editIndex = null
 
