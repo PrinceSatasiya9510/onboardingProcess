@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <!-- <h1>super</h1> -->
+
     <div class="navContainer">
         <button id="addCompany" onclick="createCompanyPopup()">Register Company</button>
         <button id="assigneCompanyToAdmin" onclick="renderAdminDetail()">All Admins</button>
@@ -21,7 +21,8 @@
         <div class="popup">
             <label for="company_name">Company Name</label>
             <input type="text" placeholder="Company Name" id="company_name">
-            <p id="company_name_error">Fill the Blank!</p>
+            <input type="file" placeholder="Profile Picture" id="profile_picture">
+            <p id="company_name_error">Both Filed are required!</p>
             <div class="action_button">
                 <button id="create_compan_submit_button" onclick="registerNewCompany()">Create</button>
                 <button id="cancel" onclick="removeCreateCompanyPopup()">Cancel</button>
@@ -30,7 +31,7 @@
     </div>
 
     <div class="comapnyDataContainer">
-        <!-- <h3>You have no company data!</h3> -->
+
         <div class="companyDetail">
             <span id="companyHeading">Comapny Detail</span>
             <div class="companyContainer">
@@ -55,22 +56,7 @@
         <div class="adminDetail">
             <span id="adminHeading">Admin Detail</span>
             <div class="adminContainer">
-                <!-- <div class="admin">
-                    <div class="adminNameContainer">
-                        <span>admin 2 </span>
-                    </div>
-                    <div class="adminActionButtonContainer">
-                        <div class="circle">
-                            <i class="ri-pencil-line" title="Edit Admin Name"></i>
-                        </div>
-                        <div class="circle">
-                            <i class="ri-table-view" title="View Detail"></i>
-                        </div>
-                        <div class="circle">
-                            <i class="ri-user-add-line" title="Assgin Admin"></i>
-                        </div>
-                    </div>
-                </div> -->
+
             </div>
         </div>
     </div>
@@ -80,10 +66,7 @@
             <h3 id="assignHeading"></h3>
             <p id="adminSelectError">please select admin</p>
             <div class="parentContainerOfAdminNames">
-                <!-- <div class="adminsNames">
-                    <div class="selectCircle"><i class="ri-check-line"></i></div>
-                    <div class="adminName"><span>sdfgdg</span></div>
-                </div> -->
+
             </div>
             <div class="assignActionButton">
                 <button id="assignAdminsButton">Submit</button>

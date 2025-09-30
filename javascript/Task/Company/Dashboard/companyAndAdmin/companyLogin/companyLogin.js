@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     userLoginOrNot()
-
+    renderCompanies();
 });
 
 async function getUserData() {
@@ -25,8 +25,8 @@ async function getUserData() {
 
     return filterAdminCompanies;
 }
-// getUserData();
-renderCompanies();
+
+
 async function renderCompanies() {
     const Data = await getUserData();
     const companyNameContainer = document.querySelector(".companyNameContainer");
@@ -35,7 +35,10 @@ async function renderCompanies() {
     Data.forEach((element) => {
         companyData += `
             <div class="companyName">
-            <span>${element.company_name}</span>
+            <div id="profilePictureContainer">
+                <img id="profile" src="${element.profile_picture_path}" alt="">
+                <span id="companyNameTagSpan">${element.company_name}</span>
+            </div>
             <button onclick="loginToCompany(${element.company_id})">Login</button>
           </div>
         `;
@@ -62,7 +65,6 @@ function updateUserToken(updatedToken) {
 
 async function setFolderStructure(data) {
     let folderStructureData = await JSON.parse(localStorage.getItem("folderStructureData")) || []
-    console.log("🚀 ~ setFolderStructure ~ folderStructureData:", folderStructureData)
 
     if (data) {
         folderStructureData.push(data)
@@ -71,7 +73,6 @@ async function setFolderStructure(data) {
         return folderData
     }
 
-    console.log("🚀 ~ setFolderStructure ~ folderStructureData:", folderStructureData)
     return folderStructureData
 }
 

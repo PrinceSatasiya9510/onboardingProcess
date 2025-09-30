@@ -1,9 +1,12 @@
 document.addEventListener("DOMContentLoaded", (event) => {
     userLoginOrNot()
+    renderComapnyDetail()
+    renderAdminDetail()
+
 
 });
-
 let editIndex = null
+
 async function getCompanyDataFromLocalStorage(response) {
     let data;
     if (response === "adminDetail") {
@@ -37,7 +40,15 @@ function removeCreateCompanyPopup() {
 
 
 function inputValidation(input) {
+    const profile_picture_Input = document.getElementById("profile_picture")
     const company_name_error = document.getElementById("company_name_error")
+    let files = profile_picture_Input.files[0]
+    if (editIndex) {
+        if (!files) {
+            company_name_error.style.display = "block"
+            return
+        }
+    }
     if (input.value.trim() == "") {
         company_name_error.style.display = "block"
         return
@@ -47,48 +58,80 @@ function inputValidation(input) {
 }
 
 async function registerNewCompany() {
-    const input = document.querySelector("#company_name")
-    let validaation = inputValidation(input)
-    let company_data = await getCompanyDataFromLocalStorage("companyDetail") || []
-    if (!validaation) {
+    const input = document.querySelector("#company_name");
+    const profile_picture_Input = document.getElementById("profile_picture");
+    let validation = inputValidation(input);
+    if (!validation) return;
+
+    let company_data = await getCompanyDataFromLocalStorage("companyDetail") || [];
+
+    if (editIndex) {
+        let accessById = company_data.findIndex(ele => ele.company_id === editIndex.company_id);
+        company_data[accessById].company_name = input.value;
+        let file = profile_picture_Input.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                company_data[accessById].profile_picture_path = e.target.result;
+
+                updateCompanyData(company_data, "companyDetail");
+                removeCreateCompanyPopup();
+                renderComapnyDetail();
+                editIndex = null;
+            };
+            reader.readAsDataURL(file);
+            return;
+        }
+
+        updateCompanyData(company_data, "companyDetail");
+        removeCreateCompanyPopup();
+        renderComapnyDetail();
+        editIndex = null;
         return;
     }
 
-    if (editIndex) {
-        console.log("🚀 ~ registerNewCompany ~ input.value:", input.value)
-        let accessById = company_data.findIndex(ele => ele.company_id === editIndex.company_id)
-        company_data[accessById].company_name = input.value
-        console.log("🚀 ~ registerNewCompany ~ company_data[accessById].company_name:", company_data[accessById].company_name)
-        editIndex = null
-    } else {
+
+    let file = profile_picture_Input.files[0];
+    if (!file) {
+        alert("Please select a profile picture");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+        let url = e.target.result;
         let company = {
             company_id: Date.now(),
             company_name: input.value,
             admin_id: [],
-            super_admin_id: 1758539428425
-        }
-        company_data.push(company)
-    }
+            profile_picture_path: url
+        };
 
-    updateCompanyData(company_data, "companyDetail")
-    removeCreateCompanyPopup()
-    renderComapnyDetail()
+        company_data.push(company);
+
+        updateCompanyData(company_data, "companyDetail");
+        removeCreateCompanyPopup();
+        renderComapnyDetail();
+    };
+
+    reader.readAsDataURL(file);
 }
-
 async function renderComapnyDetail() {
     const companyContainer = document.querySelector(".companyContainer")
     let company_data = await getCompanyDataFromLocalStorage("companyDetail")
     if (!company_data) {
         return
     }
-    console.log("🚀 ~ renderComapnyDetail ~ company_data:", company_data)
 
     let companyElement = ""
     company_data.forEach(element => {
         companyElement += `
         <div class="company" data-id="${element.company_id}">
             <div class="comapnyNameContainer">
-                <span>${element.company_name}</span>
+            <div id="profilePictureContainer">
+                <img id="profile" src="${element.profile_picture_path}" alt="">
+                </div>
+                <span id="companyNameTagSpan">${element.company_name}</span>
             </div>
             <div class="comapnyActionButtonContainer">
                 <div class="circle" onclick="updateCompanyName(${element.company_id})">
@@ -106,10 +149,6 @@ async function renderComapnyDetail() {
     });
     companyContainer.innerHTML = companyElement
 }
-
-renderComapnyDetail()
-
-
 
 function logout() {
     localStorage.removeItem("token")
@@ -134,7 +173,6 @@ async function renderAdminDetail(company_id) {
         })
     }
 
-    console.log("🚀 ~ renderAdminDetail ~ admin_data:", withoutSuperAdmin)
     const adminHeading = document.querySelector("#adminHeading")
     if (!withoutSuperAdmin || withoutSuperAdmin.length <= 0) {
         adminHeading.innerText = "Company have no admins!"
@@ -161,12 +199,10 @@ async function renderAdminDetail(company_id) {
     adminContainer.innerHTML = adminElement
 }
 
-renderAdminDetail()
 
 async function updateCompanyName(company_id) {
     const input = document.querySelector("#company_name")
     let companyData = await getCompanyDataFromLocalStorage("companyDetail")
-    console.log("🚀 ~ updateCompanyName ~ companyData:", companyData)
     let company_name = companyData.find(ele => ele.company_id === company_id)
     editIndex = company_name
     input.value = company_name.company_name
@@ -201,7 +237,6 @@ async function renderAdminDetailWhenAssign(company_id) {
             return ele
         }
     })
-    console.log("🚀 ~ renderAdminDetailWhenAssign ~ filterAdmin:", filterAdmin)
 
     if (filterAdmin.length <= 0) {
         assignHeading.innerText = "All users already assigned!"
@@ -251,7 +286,6 @@ async function renderAdminDetailWhenAssign(company_id) {
 
         const adminDetailsArray = [...adminDetails];
         let validation = adminDetailsArray.every(ele => ele.getAttribute("data-selected") == "false");
-        console.log("🚀 ~ renderAdminDetailWhenAssign ~ validation:", validation)
         const adminSelectError = document.getElementById("adminSelectError")
 
 
@@ -274,8 +308,6 @@ async function renderAdminDetailWhenAssign(company_id) {
                 findAdmin.companies_id.push(...findAdmin.companies_id, company_id)
             }
         })
-        console.log(getCompanyData)
-        console.log(withoutSuperAdmin)
         updateCompanyData(getCompanyData, "companyDetail")
         updateCompanyData(adminData, "adminDetail")
         renderAdminDetail()
@@ -296,7 +328,6 @@ function userLoginOrNot() {
         let userObject = users.find((e) => e.id == token.previousUserID);
         if (userObject) {
             let getTime = (Date.now() - userObject.timestamp) / 1000;
-            console.log("🚀 ~ userLoginOrNot ~ getTime:", getTime)
             if (getTime > 3600) {
                 window.location.href = "../../authentication/login/login.html";
             }

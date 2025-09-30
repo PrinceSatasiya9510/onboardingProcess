@@ -42,9 +42,6 @@ async function getFoldersDataFromLocalStorage() {
   const logoutFromCompany = document.getElementById("logoutFromCompany")
 
   let folders = folderStructureData.find(ele => ele.company_id == companyLoginToken.company_id && ele.admin_id == companyLoginToken.previousUserID)
-  console.log("🚀 ~ getFoldersDataFromLocalStorage ~ companyLoginToken:", companyLoginToken)
-  console.log("🚀 ~ getFoldersDataFromLocalStorage ~ folderStructureData:", folderStructureData)
-  console.log("🚀 ~ getFoldersDataFromLocalStorage ~ folders:", folders)
   myFolderData = folders.folder_structure;
 
   let company_name = company_data.find(ele => ele.company_id == folders.company_id)
@@ -104,7 +101,6 @@ function renderFolder(folder) {
 
   folderDiv.appendChild(folderHeading);
   folderDiv.appendChild(childContainer);
-  // console.log("🚀 ~ renderFolder ~ folderDiv:", folderDiv)
   folderToggle(folderDiv);
 
   return folderDiv;
@@ -124,7 +120,6 @@ function createNewFolder(parentFolderId, folderEditIndex) {
     return;
   }
   let parentObject = findByID(parentFolderId, myFolderData);
-  // console.log("🚀 ~ createNewFolder ~ parentObject:", parentObject)
   input.value = parentObject.name;
 
   if (folderEditIndex) {
@@ -138,7 +133,6 @@ function createNewFolder(parentFolderId, folderEditIndex) {
     };
     parentObject.childrens = [...parentObject.childrens, newobject];
   }
-  // console.log(myFolderData)
   updateLocalStorage(myFolderData, getFoldersDataFromLocalStorage);
   popupRemove();
 }
@@ -149,9 +143,7 @@ function folderDelete(folderId) {
   let findIndexOfDeleteFolder = parentFolder["childrens"].findIndex(
     (item) => item.id == folderId
   );
-  // console.log("🚀 ~ folderDelete ~ findIndexOfDeleteFolder:", findIndexOfDeleteFolder)
   parentFolder["childrens"].splice(findIndexOfDeleteFolder, 1);
-  // console.log(myFolderData)
   updateLocalStorage(myFolderData, getFoldersDataFromLocalStorage);
   popupRemove();
 }
@@ -277,8 +269,6 @@ document.addEventListener("dragover", function (e) {
 document.addEventListener("drop", function (e) {
   e.preventDefault();
   const currentFolder = e.target.closest(".Folder");
-  console.log("🚀 ~ currentFolder:", currentFolder)
-  console.log("🚀 ~ movingFolder:", movingFolder)
   if (!movingFolder || !currentFolder || movingFolder === currentFolder) {
     return;
   }
@@ -291,9 +281,7 @@ document.addEventListener("drop", function (e) {
   }
 
   const movingObj = findByID(movingId, myFolderData);
-  // console.log("🚀 ~ movingObj:", movingObj)
   const targetObj = findByID(targetId, myFolderData);
-  // console.log("🚀 ~ targetObj:", targetObj)
   if (!movingObj || !targetObj) {
     return;
   }
@@ -307,7 +295,6 @@ document.addEventListener("drop", function (e) {
     return;
   }
 
-  // console.log("🚀 ~ movingObjectAreNotPutInChildObject:", movingObjectAreNotPutInChildObject)
 
   const oldParent = findByID(movingObj.parentId, myFolderData);
   if (oldParent) {

@@ -27,10 +27,7 @@ body {
 }
 
 .companyNameContainer {
-    /* margin-top: 10px; */
     height: fit-content;
-    /* border: 1px solid black; */
-    /* display: grid; */
     gap: 10px;
     overflow: scroll;
     scrollbar-width: none;
@@ -65,4 +62,23 @@ body {
 .logoutContainer i {
     cursor: pointer;
     font-size: 18px;
+}
+
+
+
+#profile {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+#profilePictureContainer {
+    height: 50px;
+    width: 50px;
+    display: flex;
+    align-items: center;
+}
+
+#companyNameTagSpan {
+    margin-left: 15px;
 }

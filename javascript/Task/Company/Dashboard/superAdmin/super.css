@@ -11,8 +11,6 @@ body {
 .navContainer {
     height: 60px;
     width: 100%;
-    /* background-color: aqua; */
-    /* border: 1px solid #000; */
     display: flex;
     justify-content: end;
     align-items: center;
@@ -60,7 +58,6 @@ body {
     border: 1px solid #000;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
 }
 
 .adminDetail {
@@ -82,15 +79,15 @@ body {
 
 .companyContainer {
     height: 100%;
-    /* border: 1px solid #000; */
     width: 100%;
 }
 
 .company {
-    height: 50px;
+    height: fit-content;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    margin-top: 10px;
 }
 
 .company:hover {
@@ -100,7 +97,6 @@ body {
 .comapnyNameContainer {
     height: 50px;
     width: 50%;
-    /* border: 1px solid #000; */
     display: flex;
     align-items: center;
     padding-left: 10px;
@@ -113,7 +109,6 @@ body {
 .comapnyActionButtonContainer {
     height: 50px;
     width: 50%;
-    /* border: 1px solid #000; */
     display: flex;
     justify-content: end;
     align-items: center;
@@ -158,7 +153,6 @@ body {
 .adminNameContainer {
     height: 50px;
     width: 50%;
-    /* border: 1px solid #000; */
     display: flex;
     align-items: center;
     padding-left: 10px;
@@ -171,7 +165,6 @@ body {
 .adminActionButtonContainer {
     height: 50px;
     width: 50%;
-    /* border: 1px solid #000; */
     display: flex;
     justify-content: end;
     align-items: center;
@@ -255,8 +248,6 @@ body {
 }
 
 .parentContainerOfAdminNames {
-    /* height: 50%; */
-    /* border: 1px solid #000; */
     scrollbar-width: none;
     overflow: scroll;
 }
@@ -273,8 +264,6 @@ body {
 }
 
 #assignHeading {
-    /* margin-left: 20px; */
-    /* margin-top: 12px; */
     margin-bottom: 20px;
 }
 
@@ -291,13 +280,11 @@ body {
     height: 40px;
     width: 150px;
     align-self: flex-end;
-    /* margin-right: 10px; */
     cursor: pointer;
     font-size: 16px;
 }
 
 .assignActionButton {
-    /* border: 1px solid #000; */
     margin-top: 20px;
     display: flex;
     justify-content: end;
@@ -309,13 +296,12 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    /* border: 1px solid #000; */
 }
 
 .adminName {
     display: flex;
     align-items: center;
-    /* border: 1px solid #000; */
+
 }
 
 
@@ -342,4 +328,21 @@ body {
 
 #adminSelectError {
     display: none;
+}
+
+#profile {
+
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+#profilePictureContainer {
+    height: 50px;
+    width: 50px;
+
+}
+
+#companyNameTagSpan {
+    margin-left: 15px;
 }
