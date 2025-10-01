@@ -1,0 +1,15 @@
+.image {
+    height: 300px;
+}
+
+.canvasToImage {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    border: 1px solid #000;
+    margin-top: 30px;
+}
+
+canvas {
+    display: none;
+}
