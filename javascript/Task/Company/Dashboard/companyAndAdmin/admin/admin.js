@@ -4,8 +4,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 var myFolderData;
+var folder_selected_id = null
 let movingFolder = null;
 let editIndex = null;
+let selectedFile = null;
 const circle = document.querySelector(".circle")
 let logoutStatus = true;
 circle.addEventListener("click", function () {
@@ -19,6 +21,35 @@ circle.addEventListener("click", function () {
   }
 
 })
+
+
+function getUsers() {
+  return JSON.parse(localStorage.getItem("adminDetail")) || [];
+}
+
+function userLoginOrNot() {
+  let token = JSON.parse(localStorage.getItem("token"));
+  let users = getUsers();
+
+  if (token) {
+    let userObject = users.find((e) => e.id == token.previousUserID);
+    if (userObject) {
+      let getTime = (Date.now() - userObject.timestamp) / 1000;
+      if (getTime > 3600) {
+        window.location.href = "../../../authentication/login/login.html";
+      }
+    }
+  }
+}
+
+async function getLocalStorageData(storage_name) {
+  let data = await JSON.parse(localStorage.getItem(storage_name))
+  if (!data) {
+    return "Data Not Found!"
+  }
+  return data
+}
+
 
 async function updateLocalStorage(data, callback) {
   const companyLoginToken = await JSON.parse(localStorage.getItem("token"))
@@ -69,32 +100,47 @@ function findByID(id, obj) {
 }
 
 
-
-function renderFolder(folder) {
+function renderFolder(folder, selectedFolderId) {
+  console.log("🚀 ~ renderFolder ~ folder:", folder)
   const folderDiv = document.createElement("div");
   folderDiv.className = "Folder";
   folderDiv.setAttribute("data-status", "true");
   folderDiv.setAttribute("draggable", "true");
   folderDiv.setAttribute("data-id", folder.id);
 
+  if (folder.id == selectedFolderId) {
+    folderDiv.setAttribute("selected", "true");
+  } else {
+    folderDiv.setAttribute("selected", "false");
+  }
+
+  folderDiv.setAttribute("onclick", `folderSelectStatus(this,event,${folder.id},renderFolderDoument)`);
+
   const folderHeading = document.createElement("div");
+  folderHeading.setAttribute("data-id", folder.id)
   folderHeading.className = "folderHeading";
+
+  if (folder.id == selectedFolderId) {
+    folderHeading.style.backgroundColor = "#082d46";
+    folderHeading.style.color = "#FFF";
+  }
+
   folderHeading.innerHTML = `
-        <i class="ri-arrow-down-s-line down_arrow"></i>
-        <span class="folderName">${folder.name}</span>
-        <div class="actionIcons">
-            <i class="ri-pencil-fill" onclick="popup(${folder.id},true)"></i>
-            <i class="ri-folder-add-fill" onclick="popup(${folder.id})"></i>
-            <i class="ri-delete-bin-6-fill" onclick="deleteContainerPopup(${folder.id})"></i>
-        </div>
-    `;
+      <i class="ri-arrow-down-s-line down_arrow"></i>
+      <span class="folderName">${folder.name}</span>
+      <div class="actionIcons">
+          <i class="ri-pencil-fill" onclick="popup(${folder.id},true)"></i>
+          <i class="ri-folder-add-fill" onclick="popup(${folder.id})"></i>
+          <i class="ri-delete-bin-6-fill" onclick="deleteContainerPopup(${folder.id})"></i>
+      </div>
+  `;
 
   const childContainer = document.createElement("div");
   childContainer.className = "childContainer";
 
   if (folder.childrens && folder.childrens.length > 0) {
     folder["childrens"].forEach((child) => {
-      const children = renderFolder(child);
+      const children = renderFolder(child, selectedFolderId);
       childContainer.appendChild(children);
     });
   }
@@ -109,7 +155,7 @@ function renderFolder(folder) {
 async function genrateMainFolderContainer() {
   const container = document.querySelector(".container");
   container.innerHTML = "";
-  const mainFolder = renderFolder(myFolderData);
+  const mainFolder = renderFolder(myFolderData, 1000);
   container.appendChild(mainFolder);
 }
 
@@ -129,6 +175,7 @@ function createNewFolder(parentFolderId, folderEditIndex) {
       id: Date.now(),
       parentId: parentFolderId,
       name: folderName,
+      documents: [],
       childrens: [],
     };
     parentObject.childrens = [...parentObject.childrens, newobject];
@@ -326,21 +373,193 @@ function logout() {
 
 
 
-function getUsers() {
-  return JSON.parse(localStorage.getItem("adminDetail")) || [];
-}
+function folderSelectStatus(div, event, folder_id, callback) {
+  event.stopPropagation();
+  const addDocumentButton = document.getElementById("addDocBTN")
+  addDocumentButton.setAttribute("onclick", `documentUploadPopup(${folder_id})`)
+  const currentFolderHeading = div.querySelector(".folderHeading");
 
-function userLoginOrNot() {
-  let token = JSON.parse(localStorage.getItem("token"));
-  let users = getUsers();
 
-  if (token) {
-    let userObject = users.find((e) => e.id == token.previousUserID);
-    if (userObject) {
-      let getTime = (Date.now() - userObject.timestamp) / 1000;
-      if (getTime > 3600) {
-        window.location.href = "../../../authentication/login/login.html";
-      }
+  if (folder_selected_id !== null) {
+    const previousSelected = document.querySelector(`.Folder[data-id="${folder_selected_id}"]`);
+    if (previousSelected) {
+      previousSelected.querySelector(".folderHeading").style.backgroundColor = "transparent";
+      previousSelected.querySelector(".folderHeading").style.color = "#000";
+      previousSelected.setAttribute("selected", "false");
     }
   }
+
+
+  div.setAttribute("selected", "true");
+  currentFolderHeading.style.backgroundColor = "#082d46";
+  currentFolderHeading.style.color = "#FFF";
+
+  folder_selected_id = folder_id;
+  callback(folder_id)
 }
+
+
+function renderFolderDoument(folder_id) {
+  // console.log("🚀 ~ renderFolderDoument ~ folder_id:", folder_id)
+  const documentRenderContainer = document.querySelector(".documentRenderContainer")
+  let folder = findByID(folder_id, myFolderData)
+  let documents = folder.documents
+  console.log("🚀 ~ renderFolderDoument ~ documents:", documents)
+
+  let doc = ""
+  documents.forEach(ele => {
+    doc += `
+       <div class="document">
+          <div class="documentImageContainer">
+              <img src="${ele.url}" alt="">
+          </div>
+          <div class="documentNameContainer">
+              <div class="documentName">
+                  <span>${ele.fileName}</span>
+              </div>
+              <div class="documentActionButton">
+                  <div class="circle" id="viewDoc"><i class="ri-eye-line"></i></div>
+                  <div class="circle" id="deleteDoc"><i class="ri-delete-bin-6-fill"></i></div>
+              </div>
+            </div>
+        </div>
+    `
+  })
+  documentRenderContainer.innerHTML = doc
+}
+
+
+
+
+function handleDragOver(e) {
+  e.preventDefault();
+  const uploadContainer = document.querySelector(".uploadContainer");
+  uploadContainer.classList.add("hover");
+}
+
+function handleDragLeave() {
+  const uploadContainer = document.querySelector(".uploadContainer");
+  uploadContainer.classList.remove("hover");
+}
+
+function handleDrop(e) {
+  e.preventDefault();
+  handleDragLeave();
+
+  const files = e.dataTransfer.files;
+  if (files.length > 0) {
+    selectedFile = files[0];
+
+    document.getElementById("uploadName").innerText = selectedFile.name;
+    const uploadContainer = document.querySelector(".uploadContainer");
+    uploadContainer.style.border = "1px dashed green";
+    uploadContainer.style.background = "#eef";
+    uploadContainer.style.borderColor = "#339";
+
+    document.getElementById("uploadButton").style.display = "block";
+  }
+}
+
+
+function handleFileChange() {
+  const files = upload.files;
+  if (files.length > 0) {
+    selectedFile = files[0]
+
+    document.getElementById("uploadName").innerText = selectedFile.name;
+    const uploadContainer = document.querySelector(".uploadContainer");
+    uploadContainer.style.border = "1px dashed green";
+    uploadContainer.style.background = "#eef";
+    uploadContainer.style.borderColor = "#339";
+
+    document.getElementById("uploadButton").style.display = "block";
+  }
+}
+
+
+function handleContainerClick() {
+  const upload = document.getElementById("upload");
+  upload.click();
+}
+
+function documentUploadPopup(folder_id) {
+  console.log("🚀 ~ documentUploadPopup ~ folder_id:", folder_id)
+  const documentPopupContainer = document.querySelector(".documentPopupContainer");
+  const uploadContainer = document.querySelector(".uploadContainer");
+  const upload = document.getElementById("upload");
+  const uploadButton = document.getElementById("uploadButton");
+
+  documentPopupContainer.style.display = "flex";
+  uploadContainer.addEventListener("dragover", handleDragOver);
+  uploadContainer.addEventListener("dragleave", handleDragLeave);
+  uploadContainer.addEventListener("drop", handleDrop);
+  uploadContainer.addEventListener("click", handleContainerClick);
+  upload.addEventListener("change", handleFileChange);
+
+  uploadButton.onclick = async function (e) {
+    e.preventDefault();
+    if (selectedFile) {
+
+      await uploadDocument(selectedFile, folder_id);
+
+      removeDocumentUploadPopup();
+    }
+  };
+}
+
+function removeDocumentUploadPopup() {
+  selectedFile = null
+  const documentPopupContainer = document.querySelector(".documentPopupContainer");
+  const uploadContainer = document.querySelector(".uploadContainer");
+  const upload = document.getElementById("upload");
+  const uploadName = document.getElementById("uploadName");
+  const uploadButton = document.getElementById("uploadButton");
+
+  uploadContainer.style.background = "transparent";
+  uploadContainer.style.borderColor = "#000";
+  uploadName.innerText = "Upload & Drag and drop";
+  documentPopupContainer.style.display = "none";
+  uploadButton.style.display = "none";
+  upload.value = "";
+  uploadContainer.removeEventListener("dragover", handleDragOver);
+  uploadContainer.removeEventListener("dragleave", handleDragLeave);
+  uploadContainer.removeEventListener("drop", handleDrop);
+  uploadContainer.removeEventListener("click", handleContainerClick);
+  upload.removeEventListener("change", handleFileChange);
+}
+
+
+
+async function uploadDocument(document, folder_id) {
+  let folder = await findByID(folder_id, myFolderData)
+
+  const reader = new FileReader()
+  const index = document.name.indexOf(".")
+  reader.addEventListener("load", function () {
+    let url = reader.result
+    let obj = {
+      file_id: Date.now(),
+      url,
+      fileName: document.name.slice(0, index)
+    }
+    console.log("🚀 ~ uploadDocument ~ obj:", obj)
+    folder.documents.push(obj)
+    updateLocalStorage(myFolderData, getFoldersDataFromLocalStorage)
+    renderFolderDoument(folder_id)
+  })
+  reader.readAsDataURL(document)
+}
+
+
+
+async function genrateMainFolderContainer() {
+  const container = document.querySelector(".container");
+  container.innerHTML = "";
+  const mainFolder = renderFolder(myFolderData, folder_selected_id);
+  container.appendChild(mainFolder);
+  if (folder_selected_id !== null) {
+    renderFolderDoument(folder_selected_id);
+  }
+}
+
+genrateMainFolderContainer()

@@ -105,6 +105,7 @@ async function loginToCompany(company_id) {
             {
                 company_id: userToken.company_id,
                 admin_id: userToken.previousUserID,
+                documents: [],
                 folder_structure: {
                     id: 1000,
                     parentId: null,

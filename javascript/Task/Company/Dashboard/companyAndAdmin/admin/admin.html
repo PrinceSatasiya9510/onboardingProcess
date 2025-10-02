@@ -31,16 +31,50 @@
         </div>
     </div>
 
-    <div class="sidebar">
-        <h2 id="companyNameTag"></h2>
-        <div class="circle"><i class="ri-logout-box-r-line" title="logout"></i></div>
-        <div class="logoutContainer">
-            <h5 id="logoutFromCompany" onclick="logoutFromCompany()">Logout From example</h5>
-            <h5 id="completeLogout" onclick="logout()">logout</h5>
+    <div class="folderDoument">
+        <div class="sidebar">
+            <button id="addDocBTN" onclick="documentUploadPopup()">Add Dcouments</button>
+            <h2 id="companyNameTag"></h2>
+            <div class="circle"><i class="ri-logout-box-r-line" title="logout"></i></div>
+            <div class="logoutContainer">
+                <h5 id="logoutFromCompany" onclick="logoutFromCompany()">Logout From example</h5>
+                <h5 id="completeLogout" onclick="logout()">logout</h5>
+            </div>
+        </div>
+
+        <div class="documentContainer">
+            <div class="documentRenderContainer">
+                <!-- <div class="document">
+                    <div class="documentImageContainer">
+                        <img src="./public/bussiness-man.png" alt="">
+                    </div>
+                    <div class="documentNameContainer">
+                        <div class="documentName">
+                            <span>Image 1.png</span>
+                        </div>
+                        <div class="documentActionButton">
+                            <div class="circle" id="viewDoc"><i class="ri-eye-line"></i></div>
+                            <div class="circle" id="deleteDoc"><i class="ri-delete-bin-6-fill"></i></div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
         </div>
     </div>
 
 
+    <div class="documentPopupContainer">
+        <div class="documentpopup">
+            <div class="circle" id="closeDocumentPopup" onclick="removeDocumentUploadPopup()"><i
+                    class="ri-close-large-fill"></i></div>
+            <div class="uploadContainer">
+                <i class="ri-upload-cloud-2-line" id="uploadIcon"></i>
+                <span id="uploadName">Upload & Drag and drop</span>
+                <input type="file" id="upload" multiple accept="image/*">
+            </div>
+            <button id="uploadButton">Upload</button>
+        </div>
+    </div>
 
     <script src="admin.js"></script>
 </body>

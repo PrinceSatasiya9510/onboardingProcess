@@ -140,14 +140,15 @@ body {
 }
 
 .sidebar {
-    height: 60px;
-    width: 150rem;
+    height: 7%;
+    /* width: 150rem; */
     border: 1px solid #000;
     display: flex;
     align-items: center;
     position: relative;
     justify-content: end;
     padding-right: 20px;
+    position: relative;
 
 }
 
@@ -193,4 +194,172 @@ body {
 
 .logoutContainer h5:hover {
     background-color: #e4e4e4;
+}
+
+
+
+
+.folderDoument {
+    width: 100%;
+    height: 100vh;
+}
+
+.documentContainer {
+    height: 93%;
+    width: 100%;
+    /* border: 2px solid #1414ff; */
+}
+
+#addDocBTN {
+    height: 40px;
+    width: 130px;
+    font-size: 13px;
+    cursor: pointer;
+    position: absolute;
+    left: 5px;
+}
+
+.documentRenderContainer {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 93%;
+}
+
+.document {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    cursor: pointer;
+    padding: 10px 0px;
+    padding-left: 5px;
+}
+
+.document:hover {
+    background-color: #e4e4e4;
+}
+
+.documentImageContainer {
+    height: 40px;
+    width: 40px;
+    min-height: 40px;
+    min-width: 3%;
+    /* border: 1px solid #000; */
+}
+
+.documentImageContainer img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.documentNameContainer {
+    display: flex;
+    height: 40px;
+    width: 97%;
+    /* border: 1px solid #a61f1f; */
+}
+
+.documentName {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+}
+
+.documentActionButton {
+    width: 50%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 20px;
+}
+
+#viewDoc {
+    margin-right: 5px;
+}
+
+.documentPopupContainer {
+    height: 100vh;
+    width: 100%;
+    backdrop-filter: blur(3px);
+    background-color: #ebebeb71;
+    position: absolute;
+    top: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.documentpopup {
+    height: 300px;
+    width: 450px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#closeDocumentPopup {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.uploadContainer {
+    height: 200px;
+    width: 200px;
+    /* border: 1px solid #000; */
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    border: 2px dashed #aaa;
+    transition: background 0.3s;
+}
+
+#uploadIcon {
+    font-size: 30px;
+}
+
+#upload {
+    position: absolute;
+    border-radius: 100%;
+    /* border: 1px solid #000; */
+    height: 200px;
+    cursor: pointer;
+    width: 200px;
+    display: none;
+}
+
+
+
+.uploadContainer.hover {
+    background: #eef;
+    border-color: #339;
+}
+
+#uploadButton {
+    height: 40px;
+    width: 100px;
+    font-size: 13px;
+    cursor: pointer;
+    position: absolute;
+    /* top: 0; */
+    right: 10px;
+    bottom: 10px;
+    display: none;
+}
+
+#uploadName {
+    width: 150px;
+    height: fit-content;
+    white-space: wrap;
+    text-align: center;
+    overflow: hidden;
 }
