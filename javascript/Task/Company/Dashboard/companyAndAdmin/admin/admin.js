@@ -582,5 +582,3 @@ function deleteFile(file_id) {
   renderFolderDocument(folder_selected_id)
   updateLocalStorage(myFolderData, getFoldersDataFromLocalStorage)
 }
-
-// new github profile name : PrinceSatasiya9510
