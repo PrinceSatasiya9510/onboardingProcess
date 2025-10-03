@@ -92,6 +92,7 @@ async function loginToCompany(company_id) {
                 id: 1000,
                 parentId: null,
                 name: "Folder 1",
+                documents: [],
                 childrens: [],
             }
         }
@@ -110,6 +111,7 @@ async function loginToCompany(company_id) {
                     id: 1000,
                     parentId: null,
                     name: "Folder 1",
+                    documents: [],
                     childrens: [],
                 }
             }

@@ -33,7 +33,7 @@
 
     <div class="folderDoument">
         <div class="sidebar">
-            <button id="addDocBTN" onclick="documentUploadPopup()">Add Dcouments</button>
+            <button id="addDocBTN" onclick="documentUploadPopup(1000)">Add Dcouments</button>
             <h2 id="companyNameTag"></h2>
             <div class="circle"><i class="ri-logout-box-r-line" title="logout"></i></div>
             <div class="logoutContainer">
@@ -44,20 +44,7 @@
 
         <div class="documentContainer">
             <div class="documentRenderContainer">
-                <!-- <div class="document">
-                    <div class="documentImageContainer">
-                        <img src="./public/bussiness-man.png" alt="">
-                    </div>
-                    <div class="documentNameContainer">
-                        <div class="documentName">
-                            <span>Image 1.png</span>
-                        </div>
-                        <div class="documentActionButton">
-                            <div class="circle" id="viewDoc"><i class="ri-eye-line"></i></div>
-                            <div class="circle" id="deleteDoc"><i class="ri-delete-bin-6-fill"></i></div>
-                        </div>
-                    </div>
-                </div> -->
+
             </div>
         </div>
     </div>
@@ -72,7 +59,16 @@
                 <span id="uploadName">Upload & Drag and drop</span>
                 <input type="file" id="upload" multiple accept="image/*">
             </div>
-            <button id="uploadButton">Upload</button>
+            <div class="filesActions">
+                <button id="uploadButton">Upload</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="imageViewContainer">
+        <img src="" id="imageViwerImageTag" alt="">
+        <div class="circle" id="imageViewContainerClose" onclick="removeImageViwer()">
+            <i class="ri-close-large-fill"></i>
         </div>
     </div>
 

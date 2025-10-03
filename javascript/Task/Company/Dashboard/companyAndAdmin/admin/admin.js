@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 });
 
 var myFolderData;
-var folder_selected_id = null
+var folder_selected_id = 1000
 let movingFolder = null;
 let editIndex = null;
 let selectedFile = null;
@@ -19,7 +19,6 @@ circle.addEventListener("click", function () {
     logoutContainer.style.display = "none"
     logoutStatus = true
   }
-
 })
 
 
@@ -101,12 +100,12 @@ function findByID(id, obj) {
 
 
 function renderFolder(folder, selectedFolderId) {
-  console.log("🚀 ~ renderFolder ~ folder:", folder)
   const folderDiv = document.createElement("div");
   folderDiv.className = "Folder";
   folderDiv.setAttribute("data-status", "true");
   folderDiv.setAttribute("draggable", "true");
   folderDiv.setAttribute("data-id", folder.id);
+
 
   if (folder.id == selectedFolderId) {
     folderDiv.setAttribute("selected", "true");
@@ -114,7 +113,7 @@ function renderFolder(folder, selectedFolderId) {
     folderDiv.setAttribute("selected", "false");
   }
 
-  folderDiv.setAttribute("onclick", `folderSelectStatus(this,event,${folder.id},renderFolderDoument)`);
+  folderDiv.setAttribute("onclick", `folderSelectStatus(this,event,${folder.id},renderFolderDocument)`);
 
   const folderHeading = document.createElement("div");
   folderHeading.setAttribute("data-id", folder.id)
@@ -155,9 +154,13 @@ function renderFolder(folder, selectedFolderId) {
 async function genrateMainFolderContainer() {
   const container = document.querySelector(".container");
   container.innerHTML = "";
-  const mainFolder = renderFolder(myFolderData, 1000);
+  const mainFolder = renderFolder(myFolderData, folder_selected_id);
   container.appendChild(mainFolder);
+  if (folder_selected_id !== null) {
+    renderFolderDocument(folder_selected_id);
+  }
 }
+
 
 function createNewFolder(parentFolderId, folderEditIndex) {
   let input = document.querySelector(".folderNameInput");
@@ -379,7 +382,6 @@ function folderSelectStatus(div, event, folder_id, callback) {
   addDocumentButton.setAttribute("onclick", `documentUploadPopup(${folder_id})`)
   const currentFolderHeading = div.querySelector(".folderHeading");
 
-
   if (folder_selected_id !== null) {
     const previousSelected = document.querySelector(`.Folder[data-id="${folder_selected_id}"]`);
     if (previousSelected) {
@@ -399,12 +401,24 @@ function folderSelectStatus(div, event, folder_id, callback) {
 }
 
 
-function renderFolderDoument(folder_id) {
-  // console.log("🚀 ~ renderFolderDoument ~ folder_id:", folder_id)
+function renderFolderDocument(folder_id) {
   const documentRenderContainer = document.querySelector(".documentRenderContainer")
   let folder = findByID(folder_id, myFolderData)
   let documents = folder.documents
-  console.log("🚀 ~ renderFolderDoument ~ documents:", documents)
+
+  if (documents.length <= 0) {
+    documentRenderContainer.innerHTML = "<h1>Empty Folder!</h1>"
+    documentRenderContainer.style.display = "flex"
+    documentRenderContainer.style.justifyContent = "center"
+    documentRenderContainer.style.alignItems = "center"
+    documentRenderContainer.style.color = "gray"
+    return
+  } else {
+    documentRenderContainer.style.display = ""
+    documentRenderContainer.style.justifyContent = ""
+    documentRenderContainer.style.alignItems = ""
+    documentRenderContainer.style.color = ""
+  }
 
   let doc = ""
   documents.forEach(ele => {
@@ -418,8 +432,8 @@ function renderFolderDoument(folder_id) {
                   <span>${ele.fileName}</span>
               </div>
               <div class="documentActionButton">
-                  <div class="circle" id="viewDoc"><i class="ri-eye-line"></i></div>
-                  <div class="circle" id="deleteDoc"><i class="ri-delete-bin-6-fill"></i></div>
+                  <div class="circle" id="viewDoc" onclick="imageViewer('${ele.url}')"><i class="ri-eye-line"></i></div>
+                  <div class="circle" id="deleteDoc" onclick="deleteFile(${ele.file_id})"><i class="ri-delete-bin-6-fill"></i></div>
               </div>
             </div>
         </div>
@@ -455,7 +469,6 @@ function handleDrop(e) {
     uploadContainer.style.border = "1px dashed green";
     uploadContainer.style.background = "#eef";
     uploadContainer.style.borderColor = "#339";
-
     document.getElementById("uploadButton").style.display = "block";
   }
 }
@@ -465,13 +478,13 @@ function handleFileChange() {
   const files = upload.files;
   if (files.length > 0) {
     selectedFile = files[0]
-
     document.getElementById("uploadName").innerText = selectedFile.name;
     const uploadContainer = document.querySelector(".uploadContainer");
+    const filesActions = document.querySelector(".filesActions")
     uploadContainer.style.border = "1px dashed green";
     uploadContainer.style.background = "#eef";
     uploadContainer.style.borderColor = "#339";
-
+    filesActions.style.display = "flex"
     document.getElementById("uploadButton").style.display = "block";
   }
 }
@@ -483,7 +496,6 @@ function handleContainerClick() {
 }
 
 function documentUploadPopup(folder_id) {
-  console.log("🚀 ~ documentUploadPopup ~ folder_id:", folder_id)
   const documentPopupContainer = document.querySelector(".documentPopupContainer");
   const uploadContainer = document.querySelector(".uploadContainer");
   const upload = document.getElementById("upload");
@@ -499,13 +511,12 @@ function documentUploadPopup(folder_id) {
   uploadButton.onclick = async function (e) {
     e.preventDefault();
     if (selectedFile) {
-
       await uploadDocument(selectedFile, folder_id);
-
       removeDocumentUploadPopup();
     }
   };
 }
+
 
 function removeDocumentUploadPopup() {
   selectedFile = null
@@ -514,6 +525,7 @@ function removeDocumentUploadPopup() {
   const upload = document.getElementById("upload");
   const uploadName = document.getElementById("uploadName");
   const uploadButton = document.getElementById("uploadButton");
+
 
   uploadContainer.style.background = "transparent";
   uploadContainer.style.borderColor = "#000";
@@ -532,7 +544,6 @@ function removeDocumentUploadPopup() {
 
 async function uploadDocument(document, folder_id) {
   let folder = await findByID(folder_id, myFolderData)
-
   const reader = new FileReader()
   const index = document.name.indexOf(".")
   reader.addEventListener("load", function () {
@@ -542,24 +553,32 @@ async function uploadDocument(document, folder_id) {
       url,
       fileName: document.name.slice(0, index)
     }
-    console.log("🚀 ~ uploadDocument ~ obj:", obj)
     folder.documents.push(obj)
     updateLocalStorage(myFolderData, getFoldersDataFromLocalStorage)
-    renderFolderDoument(folder_id)
+    renderFolderDocument(folder_id)
   })
   reader.readAsDataURL(document)
 }
 
 
+function imageViewer(url) {
+  const imageViewContainer = document.querySelector(".imageViewContainer")
+  const imageViwerImageTag = document.getElementById("imageViwerImageTag")
+  imageViewContainer.style.display = "flex";
+  imageViwerImageTag.src = url;
 
-async function genrateMainFolderContainer() {
-  const container = document.querySelector(".container");
-  container.innerHTML = "";
-  const mainFolder = renderFolder(myFolderData, folder_selected_id);
-  container.appendChild(mainFolder);
-  if (folder_selected_id !== null) {
-    renderFolderDoument(folder_selected_id);
-  }
 }
 
-genrateMainFolderContainer()
+function removeImageViwer() {
+  const imageViewContainer = document.querySelector(".imageViewContainer")
+  imageViewContainer.style.display = "none"
+}
+
+function deleteFile(file_id) {
+  let folder = findByID(folder_selected_id, myFolderData)
+  let deleteDocumentIndex = folder.documents.findIndex(ele => ele.file_id == file_id)
+  folder.documents.splice(deleteDocumentIndex, 1)
+
+  renderFolderDocument(folder_selected_id)
+  updateLocalStorage(myFolderData, getFoldersDataFromLocalStorage)
+}
