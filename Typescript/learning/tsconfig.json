@@ -2,8 +2,8 @@
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
     // File Layout
-    "rootDir": "learning/src",
-    "outDir": "learning/dist",
+    "rootDir": "../learning/src/",
+    "outDir": "../learning/dist/",
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "ES2015",
@@ -31,7 +31,7 @@
     "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,

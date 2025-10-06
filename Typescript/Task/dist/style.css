@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.inputContainer {
+    /* border: 1px solid #000; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.tableContainer {
+    border: 1px solid #000;
+    margin-top: 20px;
+}
+
+input {
+    height: 30px;
+    margin-top: 5px;
+}
+
+.addBTN {
+    cursor: pointer;
+    height: 30px;
+    width: 120px;
+    margin-top: 10px;
+}
+
+table {
+    width: fit-content;
+}
+
+
+td {
+    padding: 10px;
+}
+
+p {
+    color: red;
+    display: none;
+}
+
+.editBTN,
+.deleteBTN {
+    width: 60px;
+    cursor: pointer;
+    height: 30px;
+}

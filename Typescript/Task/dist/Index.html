@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="inputContainer">
+            <input id="name" type="text" placeholder="name">
+            <p id="nameError"></p>
+            <input id="email" type="text" placeholder="email">
+            <p id="emailError"></p>
+            <input id="phone" type="number" placeholder="phone">
+            <p id="phoneError"></p>
+            <button class="addBTN">Add</button>
+        </div>
+
+        <div class="tableContainer">
+            <table border="1">
+                <thead>
+                    <th>name</th>
+                    <th>email</th>
+                    <th>phone</th>
+                    <th>actions</th>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>abc</td>
+                        <td>abc@abc.abc</td>
+                        <td>4545</td>
+                        <td>
+                            <button onclick="">EDIT</button>
+                            <button>DELETE</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script type="module" src="./task.js" defer></script>
+</body>
+
+</html>
