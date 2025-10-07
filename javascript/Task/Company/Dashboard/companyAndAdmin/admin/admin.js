@@ -9,6 +9,7 @@ let movingFolder = null;
 let editIndex = null;
 let selectedFile = null;
 const circle = document.querySelector(".circle")
+
 let logoutStatus = true;
 circle.addEventListener("click", function () {
   const logoutContainer = document.querySelector(".logoutContainer")
@@ -423,7 +424,7 @@ function renderFolderDocument(folder_id) {
   let doc = ""
   documents.forEach(ele => {
     doc += `
-       <div class="document">
+       <div class="document" data-img="${ele.url}">
           <div class="documentImageContainer">
               <img src="${ele.url}" alt="">
           </div>
@@ -440,7 +441,17 @@ function renderFolderDocument(folder_id) {
     `
   })
   documentRenderContainer.innerHTML = doc
+
+
+  const viewDoc = document.querySelectorAll(".document")
+  viewDoc.forEach(ele => {
+    ele.addEventListener("dblclick", function () {
+      let arrtibite = this.getAttribute("data-img")
+      imageViewer(arrtibite)
+    })
+  })
 }
+
 
 
 
