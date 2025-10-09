@@ -441,8 +441,6 @@ function renderFolderDocument(folder_id) {
     `
   })
   documentRenderContainer.innerHTML = doc
-
-
   const viewDoc = document.querySelectorAll(".document")
   viewDoc.forEach(ele => {
     ele.addEventListener("dblclick", function () {
