@@ -1,0 +1,25 @@
+{
+    "data": [
+        {
+            "id": 1000,
+            "name": "abc",
+            "emai": "abc@gmail.com",
+            "phone": 123123,
+            "address": "india"
+        },
+        {
+            "id": 1001,
+            "name": "example",
+            "emai": "example@gmail.com",
+            "phone": 123123,
+            "address": "delhi"
+        },
+        {
+            "id": 1002,
+            "name": "alice",
+            "emai": "alice@gmail.com",
+            "phone": 123123,
+            "address": "mumbai"
+        }
+    ]
+}

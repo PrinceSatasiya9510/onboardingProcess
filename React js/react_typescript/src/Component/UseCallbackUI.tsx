@@ -1,21 +1,17 @@
 import React, { useEffect } from 'react';
+import UseCallback from './UseCallback';
 
 interface UseCallbackUIProps {
     props: (response: number) => void;
 }
 
-export default function UseCallbackUI({ props }: UseCallbackUIProps) {
-
-    // useEffect(() => {
-    //     props(2);
-
-    // }, [props]);
-
-
+function UseCallbackUI({ props }: UseCallbackUIProps) {
+    console.log('useCallBack Child component rendered!')
     return (
         <div>
-
             <h2>UseCallback UI Component</h2>
         </div>
     );
 }
+
+export default React.memo(UseCallbackUI);
