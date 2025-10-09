@@ -450,10 +450,6 @@ function renderFolderDocument(folder_id) {
   })
 }
 
-
-
-
-
 function handleDragOver(e) {
   e.preventDefault();
   const uploadContainer = document.querySelector(".uploadContainer");
