@@ -1,8 +1,8 @@
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { useEffect, useState } from 'react';
-import 'primeicons/primeicons.css';
 import { Button } from 'primereact/button';
+import 'primeicons/primeicons.css';
 import type { DataInteface, StoreKey } from '../interfaces/dataInterface';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteData } from '../Slice/slice';
