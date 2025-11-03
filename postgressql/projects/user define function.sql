@@ -14,7 +14,7 @@ AND e.salary = (
 SELECT MAX(emp.salary)
 FROM employees emp
 WHERE emp.dept = dept_name
-);
+); 
 END;
 $$ LANGUAGE plpgsql;
 
